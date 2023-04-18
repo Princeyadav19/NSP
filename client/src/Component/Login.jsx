@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 
 const Login = () => {
   const [data, setData] = useState({
-    username: "", password: ""
+    email: "", password: ""
   });
 
   const collectdata = (e) => {
@@ -14,7 +14,7 @@ const Login = () => {
   // const fetch = require('node-fetch');
   const handlelogin = async (e) => {
     e.preventDefault();
-    const { username, password } = data;
+    const { email, password } = data;
 
     try {
       const res = await fetch('/api/login', {
@@ -23,7 +23,7 @@ const Login = () => {
           "Content-Type": "application/json"
         },
         body: JSON.stringify({
-          username, password
+          email, password
         })
       });
       const message = await res.json();
@@ -43,7 +43,7 @@ const Login = () => {
   return (
     <div>
       <form>
-        <input type='text' name="username" onChange={collectdata} />
+        <input type='text' name="email" onChange={collectdata} />
         <input type='text' name="password" onChange={collectdata} />
         <button onClick={handlelogin}>click</button>
       </form>
