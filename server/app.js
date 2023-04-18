@@ -1,15 +1,14 @@
 // requiring our models and passport as we've configured
 require("dotenv").config();
 require("express-async-errors");
-
+const cors = require('cors')
 const express = require("express");
 const app = express();
-
+app.use(cors())
 const ejs = require("ejs");
 
 const User = require("./models/user");
 const connectDB = require("./db/connect");
-
 
 const loginRouter = require("./routes/login");  // routes section
 const registerRouter = require("./routes/register");
@@ -54,27 +53,17 @@ passport.deserializeUser(function (id, done) {
   });
 });
 
-
 // routes
-app.use("/login", loginRouter);
-app.use("/register", registerRouter);
-app.use("/admin", adminRouter);
-app.use("/userInfo",isAuth, userInfoRouter);
+app.use("/api/login", loginRouter);
+app.use("/api/register", registerRouter);
+app.use("/api/admin", adminRouter);
+app.use("/api/userInfo", isAuth, userInfoRouter);
 
-
-
-
-
-
-
-
-
-
-app.get('/',isAuth, (req,res) =>{
-    res.render("home")
+app.get('/', isAuth, (req, res) => {
+  res.render("home")
 });
 
-app.post('/', (req,res) =>{
+app.post('/', (req, res) => {
   console.log(req.body);
 
 });
@@ -86,7 +75,7 @@ const port = process.env.PORT || 3000;
 
 const start = async () => {
   try {
-    await connectDB(process.env.MONGO_URI);
+    await connectDB(process.env.DB_URI);
     app.listen(port, () => console.log(`Server is listening port ${port}...`));
   } catch (error) {
     console.log(error);
