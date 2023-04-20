@@ -26,14 +26,14 @@ const User = () => {
             });
             console.log(response);
             console.log(newSubStart, newSubEnd, name);
-            setIsEditMode(false)
         } catch (err) {
             console.log(err?.response?.data);
         }
+        setIsEditMode(!isEditMode)
     };
 
     const handleEditClick = () => {
-        setIsEditMode(true);
+        setIsEditMode(!isEditMode);
     };
 
 
