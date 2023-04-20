@@ -17,7 +17,6 @@ const Categories = () => {
             `https://newsapi.org/v2/top-headlines?country=in&category=${selectedCategory}&apiKey=${key}`
         );
         console.log(response.data);
-        // Here you can set the state with the news data and navigate to the news page
         navigate('/news', { state: response.data });
     };
 

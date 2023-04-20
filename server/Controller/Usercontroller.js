@@ -4,7 +4,7 @@ const bcrypt = require('bcrypt');
 class Usercontroller {
   static userInfo = async (req, res) => {
     console.log(req.body)
-    const { email, name, homeAdd, startDate, EndDate } = req.body
+    const { email, name, startDate, EndDate } = req.body
 
     try {
       const alreadyUser = await userInfo.findOne({ email: email })
