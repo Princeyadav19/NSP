@@ -10,17 +10,20 @@ import Sidebar from './Pages/Sidebar'
 import News from './Pages/News'
 import Register from './Component/Register'
 import UserInfo from './Pages/userInfo'
+import Categories from './Pages/Categories'
+import Article from './Pages/Article'
 function App() {
   return (
     <div>
       <BrowserRouter>
         <Nav />
-        {/* <Sidebar /> */}
         <Routes>
-          <Route path='/' element={<Home />}></Route>
+          <Route path='/' element={<Categories />}></Route>
+          <Route path='/news/article' element={<Article />}></Route>
+          <Route path="/news" element={<News />} />
           <Route path='/login' element={<Login />}></Route>
           <Route path='/register' element={<Register />}></Route>
-          <Route path='/user' element={<UserInfo />}></Route>
+          <Route path='/user' element={<User />}></Route>
           <Route path='/about' element={<About />}></Route>
           <Route path='/chat' element={<Chat />}></Route>
           <Route path='/news' element={<News />}></Route>

@@ -14,12 +14,17 @@ const Nav = () => {
     )
 
     useEffect(() => {
-        if (location.pathname === '/user') {
+        if (location.pathname === '/') {
+            setCurrId(0);
+        }
+        else if (location.pathname === '/user') {
             setCurrId(1);
         } else if (location.pathname === '/chat') {
             setCurrId(2);
         } else if (location.pathname === '/about') {
             setCurrId(3);
+        } else {
+            setCurrId(null);
         }
     }, [location.pathname])
 

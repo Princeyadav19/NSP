@@ -1,7 +1,49 @@
 const User = require('../Models/User')
+const userInfo = require('../Models/userInfo')
 const bcrypt = require('bcrypt');
-class Usercontroller{
-    
+class Usercontroller {
+  static userInfo = async (req, res) => {
+    console.log(req.body)
+    const { email, name, homeAdd, startDate, EndDate } = req.body
+
+    try {
+      const alreadyUser = await userInfo.findOne({ email: email })
+      if (alreadyUser) {
+        return res.status(201).json({ todata: alreadyUser });
+      }
+      const isUserPresent = await User.findOne({ email: email });
+      if (!isUserPresent) {
+        return res.status(422).json({ error: "not registered user" });
+      }
+      if (
+        !email ||
+        !name ||
+        !startDate ||
+        !EndDate
+      ) {
+        return res.status(422).json({ error: "invalid data" });
+      }
+
+      const userData = new userInfo({
+        email: email,
+        name: name,
+        subStart: startDate,
+        subEnd: EndDate
+      })
+
+      const saveUserData = await userData.save()
+      console.log(saveUserData)
+      if (saveUserData) {
+        res.status(201).json({ message: "successfully saves UserInfo" });
+      } else {
+        res.status(500).json({ error: "registration failed" });
+      }
+    }
+    catch (error) {
+      console.log(error);
+    }
+  };
+
   static register = async (req, res) => {
     console.log(req.body);
     const { email, password } = req.body;
@@ -11,7 +53,6 @@ class Usercontroller{
     ) {
       return res.status(422).json({ error: "invalid data" });
     }
-
     try {
       const userExit = await User.findOne({ email: email });
       if (userExit) {
@@ -44,12 +85,12 @@ class Usercontroller{
     }
     try {
       const data = await User.findOne({ email: email });
-      console.log(data,"suresh land")
+      console.log(data)
       if (data != null) {
         const hashcompare = await bcrypt.compare(password, data.password);
-  
+
         if (hashcompare) {
-          return res.status(201).json({data:data});
+          return res.status(201).json({ data: data });
         } else {
           return res.status(422).json({ error: "invalid data" });
         }
@@ -63,9 +104,9 @@ class Usercontroller{
   }
 
   static Home = async (req, res) => {
-    res.send("home harsh")    
+    res.send("")
   }
 }
 
 
-module.exports = {Usercontroller};
+module.exports = { Usercontroller };
