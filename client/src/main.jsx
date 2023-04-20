@@ -6,10 +6,8 @@ import AuthProvider from './Context/loggedIn'
 const rootElement = document.getElementById('root')
 ReactDOM.createRoot(rootElement).render(
   <AuthProvider>
-    <React.StrictMode>
       <ChakraProvider>
         <App />
       </ChakraProvider>
-    </React.StrictMode>
   </AuthProvider>,
 )

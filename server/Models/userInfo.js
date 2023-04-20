@@ -9,13 +9,15 @@ const userInfoSchema = new mongoose.Schema({
         type: String,
         required: true
     },
+    password:{
+        type:String,
+        required:true
+    },
     subStart: {
         type: Date,
-        required: true
     },
     subEnd: {
         type: Date,
-        required: true
     }
 });
 

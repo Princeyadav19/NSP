@@ -1,45 +1,25 @@
-const User = require('../Models/User')
-const userInfo = require('../Models/userInfo')
-const bcrypt = require('bcrypt');
+const User = require("../Models/User");
+// const userInfo = require("../Models/userInfo");
+const bcrypt = require("bcrypt");
 class Usercontroller {
+
   static userInfo = async (req, res) => {
     console.log(req.body)
-    const { email, name, startDate, EndDate } = req.body
+    const { email, name, homeAdd, startDate, EndDate } = req.body
 
     try {
-      const alreadyUser = await userInfo.findOne({ email: email })
+      const alreadyUser = await User.findOne({ email: email });
       if (alreadyUser) {
-        return res.status(201).json({ todata: alreadyUser });
-      }
-      const isUserPresent = await User.findOne({ email: email });
-      if (!isUserPresent) {
-        return res.status(422).json({ error: "not registered user" });
-      }
-      if (
-        !email ||
-        !name ||
-        !startDate ||
-        !EndDate
-      ) {
-        return res.status(422).json({ error: "invalid data" });
-      }
-
-      const userData = new userInfo({
-        email: email,
-        name: name,
-        subStart: startDate,
-        subEnd: EndDate
-      })
-
-      const saveUserData = await userData.save()
-      console.log(saveUserData)
-      if (saveUserData) {
-        res.status(201).json({ message: "successfully saves UserInfo" });
+        const result = await User.updateOne(
+          { email: email },
+          { $set: { name: name, subStart: startDate, subEnd: EndDate } }
+        );
+        console.log(result);
+        return res.status(201).json({ todata: result });
       } else {
-        res.status(500).json({ error: "registration failed" });
+        return res.status(422).json("user not there");
       }
-    }
-    catch (error) {
+    } catch (error) {
       console.log(error);
     }
   };
@@ -47,10 +27,7 @@ class Usercontroller {
   static register = async (req, res) => {
     console.log(req.body);
     const { email, password } = req.body;
-    if (
-      !email ||
-      !password
-    ) {
+    if (!email || !password) {
       return res.status(422).json({ error: "invalid data" });
     }
     try {
@@ -85,7 +62,7 @@ class Usercontroller {
     }
     try {
       const data = await User.findOne({ email: email });
-      console.log(data)
+      console.log(data);
       if (data != null) {
         const hashcompare = await bcrypt.compare(password, data.password);
 
@@ -94,19 +71,17 @@ class Usercontroller {
         } else {
           return res.status(422).json({ error: "invalid data" });
         }
-      }
-      else {
+      } else {
         return res.status(422).json({ error: "plz complete data" });
       }
     } catch (error) {
       console.log(error);
     }
-  }
+  };
 
   static Home = async (req, res) => {
-    res.send("")
-  }
+    res.send("");
+  };
 }
-
 
 module.exports = { Usercontroller };
