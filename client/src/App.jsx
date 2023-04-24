@@ -6,10 +6,8 @@ import { BrowserRouter, Route, Routes } from 'react-router-dom'
 import About from './Pages/About'
 import Login from './Component/Login'
 import Chat from './Pages/Chat'
-import Sidebar from './Pages/Sidebar'
 import News from './Pages/News'
 import Register from './Component/Register'
-import UserInfo from './Pages/userInfo'
 import Categories from './Pages/Categories'
 import Article from './Pages/Article'
 function App() {
@@ -26,7 +24,6 @@ function App() {
           <Route path='/user' element={<User />}></Route>
           <Route path='/about' element={<About />}></Route>
           <Route path='/chat' element={<Chat />}></Route>
-          <Route path='/news' element={<News />}></Route>
           <Route path='*' element={<Login />}></Route>
         </Routes>
       </BrowserRouter>

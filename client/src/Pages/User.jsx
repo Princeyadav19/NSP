@@ -1,6 +1,7 @@
 import { Box, Button, Card, CardBody, CardHeader, Heading, Stack, StackDivider, Text, Wrap, WrapItem, Avatar, Input, FormLabel } from "@chakra-ui/react";
 import { useState, useContext, useEffect } from "react";
 import { AuthContext } from '../Context/loggedIn';
+import axios from 'axios';
 import { Link } from "react-router-dom";
 
 const User = () => {
@@ -11,12 +12,38 @@ const User = () => {
     const [name, setName] = useState('prateek')
     const [newSubStart, setNewSubStart] = useState(new Date('2022-05-15'))
     const [newSubEnd, setNewSubEnd] = useState(new Date('2024-05-15'))
-    // const [lastUpdated, setLastUpdated] = useState(null);
+
+
+
+
+
+    let data = JSON.stringify({
+        "email": loggedEmail,
+        "password": "1234"
+    });
+
+    let config = {
+        method: 'post',
+        maxBodyLength: Infinity,
+        url: '/api/user',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        data: data
+    };
+
+    axios.request(config)
+        .then((response) => {
+            console.log(JSON.stringify(response.data));
+        })
+        .catch((error) => {
+            console.log(error);
+        });
+
 
 
     const handleSubmitInfo = async (e) => {
         e.preventDefault();
-        // 
         try {
             const response = await axios.post("/api/user", {
                 email: loggedEmail,

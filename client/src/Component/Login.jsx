@@ -8,10 +8,13 @@ import {
   Box,
   Text
 } from "@chakra-ui/react"
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { AuthContext } from '../Context/loggedIn';
 
 const Login = () => {
+
+  const navigate = useNavigate();
+
 
   const auth = useContext(AuthContext);
   const [email, setEmail] = useState("");
@@ -37,6 +40,7 @@ const Login = () => {
         console.log(message?.data?.email)
         console.log(auth.isLoggedIn)
         auth.setIsLoggedIn(true)
+        navigate('/');
       }
     } catch (error) {
       console.error(error);

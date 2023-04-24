@@ -10,11 +10,15 @@ import {
   Text,
 } from "@chakra-ui/react";
 import { Link } from "react-router-dom";
+import { useNavigate } from 'react-router-dom';
+
 
 const Register = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
+
+  const navigate = useNavigate();
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -24,6 +28,8 @@ const Register = () => {
         password: password,
       });
       console.log(response);
+      navigate('/login')
+
     } catch (err) {
       setError(err.response.data);
     }
@@ -39,7 +45,7 @@ const Register = () => {
           <FormControl isRequired>
             <FormLabel>Email</FormLabel>
             <Input
-              type="text"
+              type="email"
               value={email}
               onChange={(event) => setEmail(event.target.value)}
             />

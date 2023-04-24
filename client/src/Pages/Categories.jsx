@@ -4,18 +4,9 @@ import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { useLocation } from 'react-router-dom';
 const Categories = () => {
-    const [selectedCategory, setSelectedCategory] = useState(null);
+    // const [selectedCategory, setSelectedCategory] = useState('');
     const navigate = useNavigate();
 
-    const handleCategorySelect = () => {
-        if(selectedCategory!=null){
-            handleGetNews()
-        }
-    };
-    // useEffect(() => {
-    //   console.log(selectedCategory)
-    // },[selectedCategory])
-    
     const category_data = [
         {
             bg: `https://cdn.logojoy.com/wp-content/uploads/2018/05/30153113/16_big2.png`,
@@ -40,15 +31,16 @@ const Categories = () => {
     ]
 
 
-    const handleGetNews = async () => {
-        console.log("this is ", selectedCategory)
+    const handleGetNews = async (category) => {
+        console.log("this is ", category)
         const key = import.meta.env.VITE_APP_KEY;
         const response = await axios.get(
-            `https://newsapi.org/v2/top-headlines?country=in&category=${selectedCategory}&apiKey=${key}`
+            `https://newsapi.org/v2/top-headlines?country=in&category=${category}&apiKey=${key}`
         );
         console.log(response.data);
         navigate('/news', { state: response.data });
     };
+
 
     return (
         <Flex direction="column" align="center">
@@ -59,10 +51,11 @@ const Categories = () => {
                         <Box
                             key={index}
                             bg={`url(${data.bg})`}
-                            onClick={() => { setSelectedCategory(String(data.text).toLowerCase()), 
-                                setTimeout(() => {
-                                    handleCategorySelect()
-                                }, 2000)}}
+                            onClick={() => {
+                                // setSelectedCategory(String(data.text).toLowerCase())
+                                handleGetNews(String(data.text).toLowerCase())
+                            }}
+
                             backgroundSize='cover'
                             backgroundPosition='center'
                             w={'15rem'}

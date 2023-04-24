@@ -8,18 +8,18 @@ const userSchema = new mongoose.Schema({
     name: {
         type: String,
     },
-    password:{
-        type:String,
-        required:true
+    password: {
+        type: String,
+        required: true
     },
     subStart: {
-        type: Date,
+        type: String,
     },
     subEnd: {
-        type: Date,
+        type: String,
     }
 });
 
-const User = mongoose.model('USER',userSchema)
+const User = mongoose.model('USER', userSchema)
 
 module.exports = User;
