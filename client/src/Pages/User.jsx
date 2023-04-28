@@ -6,12 +6,12 @@ import { Link } from "react-router-dom";
 
 const User = () => {
 
-    const { isLoggedIn, setIsLoggedIn, loggedEmail, setLoggedEmail } = useContext(AuthContext);
+    const { isLoggedIn, setIsLoggedIn, loggedEmail, setLoggedEmail, subSta, subEnd, setsubSta, setsubEnd, newName, setNewName } = useContext(AuthContext);
     console.log(loggedEmail, isLoggedIn);
     const [isEditMode, setIsEditMode] = useState(false);
     const [name, setName] = useState('')
-    const [newSubStart, setNewSubStart] = useState(new Date())
-    const [newSubEnd, setNewSubEnd] = useState(new Date())
+    const [newSubStart, setNewSubStart] = useState(new Date().toISOString().substring(0, 10))
+    const [newSubEnd, setNewSubEnd] = useState(new Date().toISOString().substring(0, 10))
     console.log(newSubStart, newSubEnd)
 
     const handleUpdate = async (e) => {
@@ -37,7 +37,7 @@ const User = () => {
 
 
     const formatDate = (date) => {
-        return `${date.getMonth() + 1}/${date.getDate()}/${date.getFullYear()}`;
+        return `${date}`;
     };
 
     if (!isLoggedIn) {
@@ -69,7 +69,7 @@ const User = () => {
                             <Stack divider={<StackDivider />} spacing={4}>
                                 <Box>
                                     <FormLabel>Name</FormLabel>
-                                    <Input onChange={(e) => { setName(e.target.value) }} type="text" defaultValue={name} />
+                                    <Input onChange={(e) => { setNewName(e.target.value) }} type="text" defaultValue={name} />
                                 </Box>
                                 <Box>
                                     <FormLabel>Email Address</FormLabel>
@@ -77,13 +77,11 @@ const User = () => {
                                 </Box>
                                 <Box>
                                     <FormLabel>Subscription Start Date</FormLabel>
-                                    <Input onChange={date => setNewSubStart(new Date(date))}
-                                        dateFormat="MM/dd/yyyy" type="date" defaultValue={newSubStart.toISOString().substring(0, 10)} />
+                                    <Input onChange={e => { setsubSta(e.target.value) }} type="date" />
                                 </Box>
                                 <Box>
                                     <FormLabel>Subscription End Date</FormLabel>
-                                    <Input onChange={date => setNewSubStart(new Date(date))}
-                                        dateFormat="MM/dd/yyyy" type="date" defaultValue={newSubEnd.toISOString().substring(0, 10)} />
+                                    <Input onChange={e => { setsubEnd(e.target.value) }} type="date" />
                                 </Box>
                             </Stack>
                             <Button mt={4} type="submit" onClick={handleUpdate}>
@@ -94,7 +92,7 @@ const User = () => {
                         <Stack divider={<StackDivider />} spacing={4}>
                             <Box>
                                 <FormLabel>Name</FormLabel>
-                                <Text>{name}</Text>
+                                <Text>{newName}</Text>
                             </Box>
                             <Box>
                                 <FormLabel>Email Address</FormLabel>
@@ -103,7 +101,7 @@ const User = () => {
                             <Box>
                                 <FormLabel>Subscription Period</FormLabel>
                                 <Text justifyContent="start">
-                                    {formatDate(newSubStart)} - {formatDate(newSubEnd)}
+                                    {formatDate(subSta)} - {formatDate(subEnd)}
                                 </Text>
                             </Box>
                         </Stack>
