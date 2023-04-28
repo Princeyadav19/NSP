@@ -9,40 +9,12 @@ const User = () => {
     const { isLoggedIn, setIsLoggedIn, loggedEmail, setLoggedEmail } = useContext(AuthContext);
     console.log(loggedEmail, isLoggedIn);
     const [isEditMode, setIsEditMode] = useState(false);
-    const [name, setName] = useState('prateek')
-    const [newSubStart, setNewSubStart] = useState(new Date('2022-05-15'))
-    const [newSubEnd, setNewSubEnd] = useState(new Date('2024-05-15'))
+    const [name, setName] = useState('')
+    const [newSubStart, setNewSubStart] = useState(new Date())
+    const [newSubEnd, setNewSubEnd] = useState(new Date())
+    console.log(newSubStart, newSubEnd)
 
-
-
-
-
-    let data = JSON.stringify({
-        "email": loggedEmail,
-        "password": "1234"
-    });
-
-    let config = {
-        method: 'post',
-        maxBodyLength: Infinity,
-        url: '/api/user',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        data: data
-    };
-
-    axios.request(config)
-        .then((response) => {
-            console.log(JSON.stringify(response.data));
-        })
-        .catch((error) => {
-            console.log(error);
-        });
-
-
-
-    const handleSubmitInfo = async (e) => {
+    const handleUpdate = async (e) => {
         e.preventDefault();
         try {
             const response = await axios.post("/api/user", {
@@ -105,16 +77,16 @@ const User = () => {
                                 </Box>
                                 <Box>
                                     <FormLabel>Subscription Start Date</FormLabel>
-
-                                    <Input onChange={(e) => { setNewSubStart(e.target.value) }} type="date" defaultValue={newSubStart.toISOString().substr(0, 10)} />
+                                    <Input onChange={date => setNewSubStart(new Date(date))}
+                                        dateFormat="MM/dd/yyyy" type="date" defaultValue={newSubStart.toISOString().substring(0, 10)} />
                                 </Box>
                                 <Box>
-
                                     <FormLabel>Subscription End Date</FormLabel>
-                                    <Input onChange={(e) => { setNewSubEnd(e.target.value) }} type="date" defaultValue={newSubEnd.toISOString().substr(0, 10)} />
+                                    <Input onChange={date => setNewSubStart(new Date(date))}
+                                        dateFormat="MM/dd/yyyy" type="date" defaultValue={newSubEnd.toISOString().substring(0, 10)} />
                                 </Box>
                             </Stack>
-                            <Button mt={4} type="submit" onClick={handleSubmitInfo}>
+                            <Button mt={4} type="submit" onClick={handleUpdate}>
                                 Save
                             </Button>
                         </form>

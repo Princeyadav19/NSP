@@ -13,10 +13,10 @@ const userSchema = new mongoose.Schema({
         required: true
     },
     subStart: {
-        type: String,
+        type: Date,
     },
     subEnd: {
-        type: String,
+        type: Date,
     }
 });
 

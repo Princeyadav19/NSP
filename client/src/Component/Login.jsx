@@ -14,8 +14,6 @@ import { AuthContext } from '../Context/loggedIn';
 const Login = () => {
 
   const navigate = useNavigate();
-
-
   const auth = useContext(AuthContext);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -40,6 +38,7 @@ const Login = () => {
         console.log(message?.data?.email)
         console.log(auth.isLoggedIn)
         auth.setIsLoggedIn(true)
+        auth.setLoggedEmail(message?.data?.email)
         navigate('/');
       }
     } catch (error) {

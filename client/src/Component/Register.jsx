@@ -25,7 +25,8 @@ const Register = () => {
     try {
       const response = await axios.post("/api/register", {
         email: email,
-        password: password,
+        name: name,
+        
       });
       console.log(response);
       navigate('/login')
